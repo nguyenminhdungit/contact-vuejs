@@ -7,7 +7,7 @@
                 <div class="col-12 form-group text-start field-item mb-3 p-0 ">
                     <div class="box  box1 p-3">
                         <h1 class="text__title">Thông tin liên hệ</h1>
-                        <p>Thiết kế webside liên hệ đặt quảng cáo google.com</p>
+                        <p>Thiết kế website liên hệ đặt quảng cáo google.com</p>
                     </div>
                     <hr />
                     <p class="text-danger p-3">*Bắt buộc</p>
