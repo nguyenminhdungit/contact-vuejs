@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="col-12 form-group text-start field-item mb-3 p-3">
-                    <label class="col-form-label mb-3">Webside</label>
+                    <label class="col-form-label mb-3">Website</label>
                     <input type="text" class="form-control border-0 border-bottom "
                         placeholder="câu trả lời của bạn" v-model.trim="contact.webside">
                 </div>
@@ -104,7 +104,6 @@ export default {
                 note: ''
             },
             isLoading: false,
-
         }
     },
     methods: {
