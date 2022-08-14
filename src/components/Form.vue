@@ -25,8 +25,8 @@
                 </div>
                 <div class="col-12 form-group text-start field-item mb-3 p-3">
                     <label class="col-form-label mb-3">Email<span class="text-danger">*</span></label>
-                    <input type="email" class="form-control border-0 border-bottom"
-                        placeholder="câu trả lời của bạn" v-model.trim="contact.email"
+                    <input type="email" name="email" class="form-control border-0 border-bottom"
+                        placeholder="câu trả lời của bạn" autocomplete="on" v-model.trim="contact.email"
                         v-bind:class="{ 'is-invalid': errors.email }">
                     <div class="invalid-feedback">
                         {{ errors.email }}
@@ -82,7 +82,7 @@
 
 
 <script>
-
+import REX from '../components/constant/constant'
 export default {
     name: 'FormRegister',
     data() {
@@ -109,10 +109,7 @@ export default {
     methods: {
         validate() {
             let isValid = true
-            const NAME_REX = /^[a-zA-Z]+ [a-zA-Z]+$/
-            const Email_REX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-            const PHONE_REX = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/
-
+            const { NAME_REX, EMAIL_REX, PHONE_REX, } = REX
             this.errors = {
                 name: '',
                 email: '',
@@ -121,41 +118,38 @@ export default {
                 webside: '',
                 note: ''
             }
+
             if (!NAME_REX.test(this.contact.name)) {
-                isValid = false
                 this.errors.name = 'ten qua ngan vui lòng nhập tên !!'
             }
             if (!this.contact.name) {
-                isValid = false
                 this.errors.name = 'vui lòng nhập tên!!'
             }
 
-            if (!Email_REX.test(this.contact.email)) {
-                isValid = false
+            if (!EMAIL_REX.test(this.contact.email)) {
                 this.errors.email = 'email không hợp lệ!'
             }
             if (!this.contact.email) {
-                isValid = false
                 this.errors.email = 'vui lòng nhập email!!'
             }
 
             if (!this.contact.address) {
-                isValid = false
                 this.errors.address = 'vui lòng nhập địa chỉ!!'
             }
             if (!PHONE_REX.test(this.contact.phone) || this.contact.phone < 0) {
-                isValid = false
                 this.errors.phone = 'Số điện thoại của bạn không đúng định dạng!'
             }
             if (!this.contact.phone) {
-                isValid = false
                 this.errors.phone = 'vui lòng nhập số điện thoại!!'
             }
             if (this.contact.note.length > 150) {
-                isValid = false
                 this.errors.note = 'ghi chú không quá 150 kí tự!'
             }
-
+            for (const key in this.errors) {
+                if (this.errors[key] !== '') {
+                    return false
+                }
+            }
             return isValid
         },
         resetForm() {
@@ -177,18 +171,27 @@ export default {
                     localStorage.setItem('contact', JSON.stringify([...contactList, this.contact]))
                     this.isLoading = false
                     this.resetForm()
-                    this.$toast.success(`dang ki thanh cong!!!`, {
+                    this.$toast.success(`đăng kí thành công!`, {
                         // override the global option
                         position: "top-right",
                     });
                 }, 3000)
+            } else {
+                for (const key in this.errors) {
+                    if (this.errors[key] !== '') {
+                        this.$toast.error(`${this.errors[key]}!`, {
+                            // override the global option
+                            position: "bottom-right",
+                        });
+                    }
+                }
+
             }
         }
     }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import '../assets/css/style.css';
 </style>
